@@ -89,6 +89,6 @@ EOF
 sudo systemctl enable $PWD/service/camera-streamer-pi708-12MP.service
 sudo systemctl enable octoprint
 
-
+# uncomment to have the script auto-reboot
 #sudo reboot
 
