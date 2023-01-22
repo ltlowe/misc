@@ -35,9 +35,13 @@ cat > service/camera-streamer-pi708-12MP.service << EOF
 [Unit]
 Description=camera-streamer web camera
 After=network.target
-ConditionPathExists=/sys/bus/i2c/drivers/imx708/10-001a/video4linux
+; ConditionPathExists causes the service to be skipped if the path
+; does not exist.
+;ConditionPathExists=/sys/bus/i2c/drivers/imx708/10-001a/video4linux
 
 [Service]
+;Fail if path doesn't exist.  Restarts will be attempted at 10s intervals.
+ExecStartPre=/usr/bin/test -e /sys/bus/i2c/drivers/imx708/10-001a/video4linux
 ExecStart=/usr/local/bin/camera-streamer \\
   -camera-path=/base/soc/i2c0mux/i2c@1/imx708@1a \\
   -camera-type=libcamera \\
@@ -73,15 +77,6 @@ EOF
 
 # update config.txt
 sudo sed -i 's/start_x=1/dtoverlay=imx708/g' /boot/config.txt
-
-
-#update octopi.txt
-cat << EOF | sudo tee -a /boot/octopi.txt > /dev/null
-
-#enable libcamera
-camera="libcamera"
-camera_libcamera_options="-r 1280x720"
-EOF
 
 
 # enable services
