@@ -1,0 +1,54 @@
+;
+; Official Raspberry Pi v3 12MP camera based on the Sony IMX708 chip
+; https://www.raspberrypi.com/products/camera-module-3/
+;
+[Unit]
+Description=camera-streamer web camera
+After=network.target
+
+
+[Service]
+;Fail if path doesn't exist.  Restarts will be attempted at 10s intervals.
+ExecStartPre=/usr/bin/test -e /sys/bus/i2c/drivers/imx708/10-001a/video4linux
+
+; raw still max is 4608x2592
+; regular still is 2304x1296
+; Max video resolution is 1920x1080p30 (720p60)
+
+
+
+ExecStart=/usr/local/bin/camera-streamer \
+  -camera-path=/base/soc/i2c0mux/i2c@1/imx708@1a \
+  -camera-type=libcamera \
+  ; YUYV offers best quality in camera-streamer
+  -camera-format=YUYV \
+  -camera-width=1920 -camera-height=1080 \
+  ; 4608 (H) × 2592 is full res - don't know how to enable it 
+  ; frame rate 30 for North America.  25 may work better in 50Hz countries
+  -camera-fps=30 \
+  ; use two memory buffers to optimise usage
+  -camera-nbufs=2 \
+  ; high-res video is 1920x1080
+  ; high-res snapshot is 1920x1056
+  -camera-high_res_factor=1 \
+  ; the low-res is 960x512
+  -camera-low_res_factor=2 \
+  ; Enable Continuous Autofocus
+  -camera-options=AfMode=2 \
+  -camera-options=AfRange=2 \
+
+
+DynamicUser=yes
+SupplementaryGroups=video i2c
+Restart=always
+RestartSec=10
+Nice=10
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+CPUWeight=20
+AllowedCPUs=1-2
+MemoryMax=250M
+
+[Install]
+WantedBy=multi-user.target
+
