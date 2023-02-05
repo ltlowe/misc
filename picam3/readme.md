@@ -1,5 +1,7 @@
 # picam3/ 
 
+ This directory contains informaton and scripts for installing and using a Raspberry Pi Camera Module 3 in octopi with [camera-streamer](https://github.com/ayufan/camera-streamer).  cam3install.sh is the main script for downloading, installing and configuring on a fresh 1.0.0 install of octopi. 
+ 
  Script to add Raspberry Pi Camera Module 3 to octopi 1.0 RC3<br>
  https://raw.githubusercontent.com/ltlowe/misc/main/picam3/cam3install.sh
 
