@@ -27,3 +27,6 @@
 > restart your system.
 
 The script will prompt for reboot once everything has been downloaded and installed.
+
+If you have already used this script and are just looking for my latest service file, it is <BR>
+https://raw.githubusercontent.com/ltlowe/misc/main/picam3/camera-streamer-pi708-12MP.service
