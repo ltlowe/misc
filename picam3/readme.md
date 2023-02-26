@@ -1,4 +1,12 @@
+
 # picam3/ 
+# UPDATE: 
+As of Feb 22, 2023, OctoPi 1.0.0 is out and Foosel has a camera-streamer based stack in test.
+Those will be the official method for using the camera module 3 with octoprint. 
+https://github.com/OctoPrint/OctoPi-UpToDate/issues/2
+
+
+# Obsolete:
 
  This directory contains informaton and scripts for installing and using a Raspberry Pi Camera Module 3 in octopi with [camera-streamer](https://github.com/ayufan/camera-streamer).  cam3install.sh is the main script for downloading, installing and configuring on a fresh 1.0.0 install of octopi.
  
